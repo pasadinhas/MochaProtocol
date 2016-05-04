@@ -15,9 +15,9 @@ public class Test {
                 return "";
             }});
         explain.addMethod(new GFMethod() {
-            Object call(Number entity) {
+            int call(Number entity) {
                 System.out.printf("%s is a number", entity);
-                return "";
+                return 7861813;
             }});
         explain.addMethod(new GFMethod() {
             Object call(String entity) {
