@@ -4,6 +4,7 @@ import ist.meic.pa.GenericFunctions.sorter.StandardSorter;
 import ist.meic.pa.GenericFunctions.util.TypeChecker;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +45,25 @@ public class GenericFunction {
         boolean methodExists = this.methods.stream().anyMatch(method -> method.isApplicable(args));
 
         if ( ! methodExists) {
+            String classesNames = "[";
+            String argsStr = "[";
+            for (int i = 0; i < args.length; i++) {
+                if (i != 0) {
+                    classesNames += ", ";
+                    argsStr += ", ";
+                }
+                classesNames += args[i].getClass();
+                if(args[i].getClass().isArray()) {
+                    argsStr += Arrays.deepToString((Object[]) args[i]);
+                } else {
+                    argsStr += args[i];
+                }
+            }
+            classesNames += "]";
+            argsStr += "]";
+
             throw new IllegalArgumentException("No methods for generic function " + this.name +
-                            " with args " + args + " of classes ");
-            // FIXME: check how to print the classes of the args
+                            " with args " + argsStr + " of classes " + classesNames);
         }
 
         this.beforeMethods.stream()
