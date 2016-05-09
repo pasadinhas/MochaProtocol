@@ -31,6 +31,7 @@ abstract public class GFMethod {
             throw new RuntimeException("Must declare call");
         }
 
+        call.setAccessible(true);
         return call;
     }
 
