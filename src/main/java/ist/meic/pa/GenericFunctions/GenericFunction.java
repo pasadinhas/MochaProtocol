@@ -62,8 +62,8 @@ public class GenericFunction {
             classesNames += "]";
             argsStr += "]";
 
-            throw new IllegalArgumentException("No methods for generic function " + this.name +
-                            " with args " + argsStr + " of classes " + classesNames);
+            throw new IllegalArgumentException("\nNo methods for generic function " + this.name +
+                            " with args " + argsStr + "\nof classes " + classesNames);
         }
 
         this.beforeMethods.stream()
