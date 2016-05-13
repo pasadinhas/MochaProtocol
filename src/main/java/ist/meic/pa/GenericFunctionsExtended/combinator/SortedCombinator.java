@@ -9,4 +9,12 @@ public abstract class SortedCombinator extends Combinator {
     public void setSorter(Sorter sorter) {
         this.sorter = sorter;
     }
+
+    public void prepare(Object[] args) {
+        if (this.sorter == null) {
+            this.sorter = new StandardSorter(args);
+        } else {
+            this.sorter.setArgs(args);
+        }
+    }
 }

@@ -1,6 +1,8 @@
 package ist.meic.pa.GenericFunctionsExtended;
 
+import ist.meic.pa.GenericFunctionsExtended.sorter.StandardSorter;
 import ist.meic.pa.GenericFunctionsExtended.combinator.AroundCombinator;
+import ist.meic.pa.GenericFunctionsExtended.sorter.Sorter;
 
 import java.util.Arrays;
 
@@ -59,7 +61,15 @@ public class Test {
             }
         });
 
-        draw.setCombinator(new AroundCombinator());
+        AroundCombinator reverseAroundCombinator = new AroundCombinator();
+        reverseAroundCombinator.setSorter(new Sorter() {
+            @Override
+            public int compare(GFMethod m1, GFMethod m2) {
+                return - new StandardSorter(args).compare(m1, m2);
+            }
+        });
+
+        draw.setCombinator(reverseAroundCombinator);
 
         println(draw.call(new Square()));
     }

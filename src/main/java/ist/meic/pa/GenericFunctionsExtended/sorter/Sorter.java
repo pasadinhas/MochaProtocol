@@ -11,6 +11,11 @@ abstract public class Sorter implements Comparator<GFMethod> {
     public Sorter(Object[] args) {
         this.args = args;
     }
+    public Sorter() {}
+
+    public void setArgs(Object[] args) {
+        this.args = args;
+    }
 
     abstract public int compare(GFMethod m1, GFMethod m2);
 }

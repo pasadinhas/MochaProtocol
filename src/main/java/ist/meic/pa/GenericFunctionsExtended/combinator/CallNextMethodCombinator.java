@@ -15,7 +15,7 @@ public abstract class CallNextMethodCombinator extends SortedCombinator {
     protected Object executeWhileCallNextMethod(Object[] args, List<GFMethod> methods) {
         List<GFMethod> applicableMethods = methods.stream()
                 .filter(method -> method.isApplicable(args))
-                .sorted(new StandardSorter(args))
+                .sorted(this.sorter)
                 .collect(toList());
 
         Object returnValue = applicableMethods.get(0).invoke(args);

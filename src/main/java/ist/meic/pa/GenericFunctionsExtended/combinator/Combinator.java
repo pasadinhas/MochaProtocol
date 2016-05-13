@@ -19,4 +19,6 @@ public abstract class Combinator {
     }
 
     public abstract Object execute(Object ... args);
+
+    public void prepare(Object[] args) {}
 }

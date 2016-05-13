@@ -1,6 +1,7 @@
 package ist.meic.pa.GenericFunctions;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by miguel on 20/04/16.
@@ -8,33 +9,58 @@ import java.util.Arrays;
 public class Test {
 
     public static void main(String[] args) {
-        final GenericFunction explain = new GenericFunction("explain");
-        explain.addMethod(new GFMethod() {
-            Object call(Integer entity) {
-                System.out.printf("%s is a integer", entity);
-                return "";
+        final GenericFunction add = new GenericFunction("add");
+
+        add.addMethod(new GFMethod() {
+            public Object call(Integer a, Integer b) {
+                return a + b;
             }});
-        explain.addMethod(new GFMethod() {
-            int call(Number entity) {
-                System.out.printf("%s is a number", entity);
-                return 7861813;
+
+        add.addMethod(new GFMethod() {
+            Object call(Object[] a, Object[] b) {
+                Object[] r = new Object[a.length];
+                for (int i = 0; i < a.length; i++) {
+                    r[i] = add.call(a[i], b[i]);
+                }
+                return r;
             }});
-        explain.addMethod(new GFMethod() {
-            Object call(String entity) {
-                System.out.printf("%s is a string", entity);
-                return "";
+
+        add.addMethod(new GFMethod() {
+            Object call(Object[] a, Object b) {
+                Object[] ba = new Object[a.length];
+                Arrays.fill(ba, b);
+                return add.call(a, ba);
             }});
-        explain.addAfterMethod(new GFMethod() {
-            void call(Integer entity) {
-                System.out.printf(" (in hexadecimal, is %x)", entity);
+
+        add.addMethod(new GFMethod() {
+            Object call(Object a, Object b[]) {
+                Object[] aa = new Object[b.length];
+                Arrays.fill(aa, a);
+                return add.call(aa, b);
             }});
-        explain.addBeforeMethod(new GFMethod() {
-            void call(Number entity) {
-                System.out.printf("The number ", entity);
+
+        add.addMethod(new GFMethod() {
+            Object call(String a, Object b) {
+                return add.call(Integer.decode(a), b);
             }});
-        println(explain.call(123));
-        println(explain.call("Hi"));
-        println(explain.call(3.14159));    }
+
+        add.addMethod(new GFMethod() {
+            Object call(Object a, String b) {
+                return add.call(a, Integer.decode(b));
+            }});
+
+        add.addMethod(new GFMethod() {
+            Object call(Object[] a, List b) {
+                return add.call(a, b.toArray());
+            }});
+
+        println(add.call(2, 3));
+        println(add.call(new Object[]{1, 2}, 3));
+        println(add.call(1, new Object[][]{{1, 2}, {3, 4}}));
+        println(add.call("12", "34"));
+        println(add.call(new Object[] { "123", "4" }, 5));
+        println(add.call(new Object[] { 1, 2, 3 }, Arrays.asList(4, 5, 6)));
+    }
 
     public static void println(Object obj) {
         if (obj instanceof Object[]) {
